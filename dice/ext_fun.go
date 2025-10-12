@@ -309,7 +309,7 @@ func RegisterBuiltinExtFun(self *Dice) {
 		},
 	}
 
-	aHelp := ".&/a <快捷指令名> [参数] // 执行对应快捷指令\n" +
+	aHelp := ".&/a <快捷指令名> [<参数>] // 执行对应快捷指令\n" +
 		".& help // 查看帮助\n" +
 		"// 定义快捷指令见 .alias 命令"
 	cmdA := CmdItemInfo{
@@ -410,9 +410,9 @@ func RegisterBuiltinExtFun(self *Dice) {
 	cmdSend := CmdItemInfo{
 		Name:      "send",
 		ShortHelp: ".send // 向骰主留言",
-		Help: "留言指令:\n.send XXXXXX // 向骰主留言\n" +
-			".send to <对方ID> 要说的话 // 骰主回复，举例. send to QQ:12345 感谢留言\n" +
-			".send to <群组ID> 要说的话 // 举例. send to QQ-Group:12345 感谢留言\n" +
+		Help: "留言指令:\n.send <内容> // 向骰主留言\n" +
+			".send to <对方ID> <内容> // 骰主回复，举例. send to QQ:12345 感谢留言\n" +
+			".send to <群组ID> <内容> // 举例. send to QQ-Group:12345 感谢留言\n" +
 			"> 指令.userid可以查看当前群的ID",
 		Solve: func(ctx *MsgContext, msg *Message, cmdArgs *CmdArgs) CmdExecuteResult {
 			val := cmdArgs.GetArgN(1)

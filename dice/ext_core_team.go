@@ -24,7 +24,7 @@ var cmdTeam = &CmdItemInfo{
 .team <团队名> add/del <@成员...> // 增减队伍列表，若无团队会自动新建
 .team <团队名> clear // 清空队伍
 .team <团队名> call // 艾特队伍
-.team <团队名> draw [数量] // 随机抽取队伍成员
+.team <团队名> draw [<数量>] // 随机抽取队伍成员
 .team <团队名> <属性> // 列出队内成员属性`,
 	DisabledInPrivate: true,
 	AllowDelegate:     true,

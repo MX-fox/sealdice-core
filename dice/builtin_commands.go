@@ -173,7 +173,7 @@ func (d *Dice) registerCoreCommands() {
 		".find #<分组> <关键字> // 查找指定分组下的文档。关键字可以多个，用空格分割\n" +
 		".find <数字ID> // 显示该ID的词条\n" +
 		".find --rand // 显示随机词条\n" +
-		".find <关键字> --num=10 // 需要更多结果\n" +
+		".find <关键字> --num=<数量> // 需要更多结果,最大为10\n" +
 		".find config --group // 查看当前默认搜索分组\n" +
 		".find config --group=<分组> // 设置当前默认搜索分组\n" +
 		".find config --groupclr // 清空当前默认搜索分组"
@@ -416,9 +416,9 @@ func (d *Dice) registerCoreCommands() {
 	d.CmdMap["find"] = cmdFind
 
 	helpForHelp := ".help // 查看本帮助\n" +
-		".help 指令 // 查看某指令信息\n" +
-		".help 扩展模块 // 查看扩展信息，如.help coc7\n" +
-		".help 关键字 // 查看任意帮助，同.find\n" +
+		".help <指令> // 查看某指令信息\n" +
+		".help <扩展模块> // 查看扩展信息，如.help coc7\n" +
+		".help <关键字> // 查看任意帮助，同.find\n" +
 		".help reload // 重新加载帮助文档，需要Master权限"
 	cmdHelp := &CmdItemInfo{
 		Name:      "help",
@@ -513,8 +513,8 @@ func (d *Dice) registerCoreCommands() {
 
 	cmdBot := &CmdItemInfo{
 		Name:      "bot",
-		ShortHelp: ".bot on/off/about/bye/quit // 开启、关闭、查看信息、退群",
-		Help:      "骰子管理:\n.bot on/off/about/bye[exit,quit] // 开启、关闭、查看信息、退群",
+		ShortHelp: ".bot on/off/about/(bye|exit|quit) // 开启、关闭、查看信息、退群",
+		Help:      "骰子管理:\n.bot on/off/about/(bye|exit|quit) // 开启、关闭、查看信息、退群",
 		Raw:       true,
 		Solve: func(ctx *MsgContext, msg *Message, cmdArgs *CmdArgs) CmdExecuteResult {
 			inGroup := msg.MessageType == "group"
@@ -761,7 +761,7 @@ func (d *Dice) registerCoreCommands() {
 	botListHelp := ".botlist add @A @B @C // 标记群内其他机器人，以免发生误触和无限对话\n" +
 		".botlist add @A @B --s  // 同上，不过骰子不会做出回复\n" +
 		".botlist del @A @B @C // 去除机器人标记\n" +
-		".botlist list/show // 查看当前列表"
+		".botlist (list|show) // 查看当前列表"
 	cmdBotList := &CmdItemInfo{
 		Name:      "botlist",
 		ShortHelp: botListHelp,
@@ -1215,7 +1215,7 @@ func (d *Dice) registerCoreCommands() {
 	}
 	d.CmdMap["master"] = cmdMaster
 
-	helpRoll := ".r <表达式> [<原因>] // 骰点指令\n.rh <表达式> <原因> // 暗骰"
+	helpRoll := ".r <表达式> [<原因>] // 骰点指令\n.rh <表达式> [<原因>] // 暗骰"
 	cmdRoll := &CmdItemInfo{
 		EnableExecuteTimesParse: true,
 		Name:                    "roll",
@@ -1463,7 +1463,7 @@ func (d *Dice) registerCoreCommands() {
 		},
 	}
 
-	helpRollX := ".rx <表达式> <原因> // 骰点指令\n.rxh <表达式> <原因> // 暗骰"
+	helpRollX := ".rx <表达式> [<原因>] // 骰点指令\n.rxh <表达式> [<原因>] // 暗骰"
 	cmdRollX := &CmdItemInfo{
 		Name:          "roll",
 		ShortHelp:     helpRoll,
@@ -1853,15 +1853,15 @@ func (d *Dice) registerCoreCommands() {
 	d.CmdMap["set"] = cmdSet
 
 	helpCh := ".pc new <角色名> // 新建角色并绑卡\n" +
-		".pc tag [<角色名> | <角色序号>] // 当前群绑卡/解除绑卡(不填角色名)\n" +
-		".pc untagAll [<角色名> | <角色序号>] // 全部群解绑(不填即当前卡)\n" +
+		".pc tag [<角色名>|<角色序号>] // 当前群绑卡/解除绑卡(不填角色名)\n" +
+		".pc untagAll [<角色名>|<角色序号>] // 全部群解绑(不填即当前卡)\n" +
 		".pc list // 列出当前角色和序号\n" +
 		".pc rename <新角色名> // 将当前绑定角色改名\n" +
-		".pc rename <角色名|序号> <新角色名> // 将指定角色改名 \n" +
+		".pc rename (<角色名>|<序号>) <新角色名> // 将指定角色改名 \n" +
 		// ".ch group // 列出各群当前绑卡\n" +
 		".pc save [<角色名>] // [不绑卡]保存角色，角色名可省略\n" +
-		".pc load (<角色名> | <角色序号>) // [不绑卡]加载角色\n" +
-		".pc del/rm (<角色名> | <角色序号>) // 删除角色 角色序号可用pc list查询\n" +
+		".pc load (<角色名>|<角色序号>) // [不绑卡]加载角色\n" +
+		".pc del/rm (<角色名>|<角色序号>) // 删除角色 角色序号可用pc list查询\n" +
 		"> 注: 海豹各群数据独立(多张空白卡)，单群游戏不需要存角色。"
 
 	cmdChar := &CmdItemInfo{
